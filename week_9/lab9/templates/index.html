@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="/static/styles.css" rel="stylesheet">
+        <title>Birthdays</title>
+    </head>
+    <body>
+        <div class="jumbotron">
+            <h1>Birthdays</h1>
+        </div>
+        {% block body %}
+        <div class="container">
+            <div class="section">
+
+                <h2>Add a Birthday</h2>
+                <!-- TODO: Create a form for users to submit a name, a month, and a day -->
+                    <form action="/add", method="GET">
+                        <input autocomplete="off" name="name" placeholder="Name" autofocus='on' type="text">
+                        <input autocomplete="off" name="month" placeholder="Month" type="text">
+                        <input autocomplete="off" name="day" placeholder="Day" type="text">
+                        <input type="submit" value="Submit Birthday">
+                    </form>
+            </div>
+
+            <div class="section">
+
+                <h2>All Birthdays</h2>
+                <div>
+                    <form action="/search" method="get">
+                        <input placeholder="Find user" name='search' type='text'>
+                        <input type="submit" value="Search">
+                    </form>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Birthday</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        
+                        <!-- TODO: Loop through the database entries to display them in this table -->
+                        {% for birthday in birthdays %}
+                            <tr>
+                                <td>{{ birthday.name }}</td>
+                                <td>{{ birthday.month }}/{{ birthday.day }}</td>
+                                <id></id>
+                                <td>
+                                    <form id="remove", action="{{ url_for('remove', birthId=birthday.id) }}", method="POST"> 
+                                        <!-- <input type="hidden" value="{{ birthday.id }}">  -->
+                                        <input type="submit" value="Remove From Database">
+                                    </form>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+        <!-- <script>
+             let remove = document.querySelector('#remove');
+             remove.addEventListener('submit', function() {
+                 $.get('/remove/' + remove.value, );
+             });
+        </script> -->
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,11 @@
+sort1 uses: bubble sort
+
+How do you know?: very fast sort time with sorted text files indicates small lower bound, and slower sort time with large random indicates less than optimal upper bound.
+
+sort2 uses: merge sort
+
+How do you know?: fastest sort time with large random text file by a large margin indicates fast upper bound.
+
+sort3 uses: selection sort
+
+How do you know?: by process of elimiation, and sort time between sort1 and sort2 in the large random selection.

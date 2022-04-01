@@ -1,0 +1,17 @@
+<script>
+    
+    function createNewPerson(name) {
+      this.name = name;
+      this.greeting = function() {
+        alert('Hi! I\'m ' + this.name + '.');
+      };
+    }
+    
+    const salva = new createNewPerson('Hank');
+    let myname = salva.name;
+    console.log(myname);
+    salva.greeting();
+
+
+    
+</script>

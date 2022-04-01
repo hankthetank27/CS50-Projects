@@ -1,0 +1,125 @@
+<!doctype html>
+
+<head>
+    
+    <title>Submit and search</title>
+    
+    <script>
+        const tableSize = 23;
+        const lists = [tableSize];
+        let submittedUsers = 0;
+        
+        class User {
+            constructor(name, address, phone) {
+                this.name = name.toUpperCase();
+                this.address = address.toUpperCase();
+                this.phone = phone;
+                this.next = null;
+            }
+            
+            hash() {
+                let sum = 0;
+                for (let i = 0; i < this.name.length; i++){
+                    sum += this.name.charCodeAt(i);
+                }
+                let hashVal = sum % tableSize;
+                console.log(sum);
+                return hashVal;
+            }
+        }
+        
+        function clearFields() {
+            document.getElementById('name').value = '';
+            document.getElementById('address').value = '';
+            document.getElementById('phone').value = '';
+        }
+        
+        function submitUserData() {
+            
+            let name = document.getElementById('name').value;
+            let address = document.getElementById('address').value;
+            let phone = document.getElementById('phone').value;
+            
+            if (name == '' || address == '' || phone == ''){
+                alert('please submit valid name, address, and phone number.');
+                return 1;
+            }
+            
+            let numTest = /^\d+$/.test(phone);
+            
+            if (numTest == false){
+                alert('please submit valid phone number.');
+                return 2;
+            }
+            
+            const list = new User(name, address, phone);
+            
+            //linked list
+            if (lists[list.hash()] != null) {
+                lists[list.hash()].next = list;
+                list.next = null;
+            } else {
+                lists[list.hash()] = list;
+            }
+            
+            submittedUsers++;
+            
+            console.log(lists);
+            
+            clearFields();
+            
+            document.getElementById('numofusers').innerHTML = submittedUsers;  
+        }
+        
+        function searchForUser() {
+            
+            //hash query
+            let searchName = document.getElementById('searchInput').value.toUpperCase();
+            let sum = 0;
+            for (let i = 0; i < searchName.length; i++){
+                sum += searchName.charCodeAt(i);
+            }
+            let hashVal = sum % tableSize;
+            
+            //search query
+            let current = lists[hashVal];
+            while (current != null) {
+                if (current.name == searchName) {
+                    document.getElementById('displayUserData').innerHTML = current.name + ', ' +  current.address + ', ' + current.phone;
+                    document.getElementById('searchInput').value = '';
+                    return true;
+                } else {    
+                    current = current.next;
+                }
+            }
+            document.getElementById('displayUserData').innerHTML = 'User not found';
+            document.getElementById('searchInput').value = '';
+        }
+    
+    </script>
+</head>
+
+<body>
+    <h3>Input user data here:</h3>
+        <form id='infoform'autocomplete="off" onsubmit="submitUserData();return false">
+            <label for='name'>Name:</label><br>
+            <input id='name' type='text'><br>
+            
+            <label for='address'>Address:</label><br>
+            <input id='address' type='text'><br>
+            
+            <label for='phone'>Phone Number:</label><br>
+            <input id='phone' type='text'><br><br>
+            
+            <input type='submit' value='Submit'>
+        </form>
+    <h4>Number of users data submitted: <span id='numofusers'>0</span></h4>
+        
+    <h3>Retrive user data:</h3>
+        <form id='searchForm' autocomplete='off' onsubmit='searchForUser();return false'>
+            <label for='search'>Search user by name:</label><br>
+            <input type='text' id='searchInput'><br><br>
+            <input type='submit' value='Search'>
+        </form>
+        <h4>User data: <span id='displayUserData'>...</span></h4>
+</body>

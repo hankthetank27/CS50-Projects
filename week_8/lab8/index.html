@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+
+<html lang="en">
+    <head>
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
+        <link href="styles.css" rel="stylesheet">
+        <title>Trivia!</title>
+
+        <script>
+                    
+                   
+            document.addEventListener('DOMContentLoaded',  function clearInp() {
+                document.getElementById("answer").value = "";
+            })
+
+             // TODO: Add code to check answers to questions
+    
+            //multiple choice
+           
+            function correct(){
+                event.currentTarget.style.backgroundColor = 'green';
+               document.getElementById('mcresult').innerText = 'Correct!';
+               
+               setTimeout(function(){
+                    let buttons = document.getElementsByTagName('button');
+                    for (let i = 0; i < buttons.length; i++){
+                        buttons[i].style.backgroundColor = '';
+                    }
+                    document.getElementById('mcresult').innerText = '';
+                }, 2000)
+            }
+    
+            function incorrect(){
+               event.currentTarget.style.backgroundColor = 'red';
+               document.getElementById('mcresult').innerText = 'Incorrect';
+               
+               setTimeout(function(){
+                    let buttons = document.getElementsByTagName('button');
+                    for (let i = 0; i < buttons.length; i++){
+                        buttons[i].style.backgroundColor = '';
+                    }
+                    document.getElementById('mcresult').innerText = '';
+                }, 2000)
+            }
+            
+            //free response
+            
+             function checkAnswer(){ 
+                let answer = document.getElementById('answer').value;
+                
+                if (answer.toUpperCase() == 'GOOD'){
+                    document.getElementById('answer').style.backgroundColor = "green"
+                    document.getElementById('frresult').innerText = 'Correct!';
+            
+                } else{
+                    document.getElementById('answer').style.backgroundColor = "red";
+                    document.getElementById('frresult').innerText = 'Incorrect';
+
+                }
+                
+                setTimeout(function(){
+                    document.getElementById('answer').style.backgroundColor = '';
+                    document.getElementById('answer').value = '';
+                    document.getElementById('frresult').innerText = '';
+                }, 2000)
+            }        
+            
+             
+        </script>
+
+    </head>
+    <body>
+
+        <div class="jumbotron">
+            <h1>Trivia!</h1>
+        </div>
+
+        <div class="container">
+
+            <div class="section">
+                <h2>Part 1: Multiple Choice </h2>
+                <hr>
+
+                <!-- TODO: Add multiple choice question here -->
+                <h3>How long should you brew your coffee?</h3>
+                
+                <button onclick='correct()'>3 Minutes</button>
+                <button onclick='incorrect()'>5 Minutes</button>
+                <button onclick='incorrect()'>10 Minutes</button>
+                
+                <p id="mcresult"></p>
+                
+            </div>
+
+            <div class="section">
+                <h2>Part 2: Free Response</h2>
+                <hr>
+
+                <!-- TODO: Add free response question here -->
+                <h3>How does your coffee taste?</h3>
+                
+                <form onsubmit="checkAnswer();return false">
+                    <input id="answer" type="text">
+                    <input type="submit">
+                </form>
+                
+                <p id="frresult"></p>
+
+            </div>
+
+        </div>
+    </body>
+</html>
